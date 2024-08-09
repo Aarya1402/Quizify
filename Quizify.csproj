@@ -68,9 +68,25 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Web.config" />
+    <Content Include="loginPage.aspx" />
+    <Content Include="signUpPage.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="loginPage.aspx.cs">
+      <DependentUpon>loginPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="loginPage.aspx.designer.cs">
+      <DependentUpon>loginPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="signUpPage.aspx.cs">
+      <DependentUpon>signUpPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="signUpPage.aspx.designer.cs">
+      <DependentUpon>signUpPage.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
