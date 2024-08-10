@@ -10,13 +10,13 @@
             width: 100%;
         }
         .auto-style2 {
-            width: 125px;
+            width: 208px;
         }
         .auto-style3 {
             width: 229px;
         }
         .auto-style4 {
-            width: 125px;
+            width: 208px;
             height: 26px;
         }
         .auto-style5 {
@@ -40,7 +40,7 @@
                         <asp:TextBox ID="tbUsername" runat="server" AutoPostBack="True" CausesValidation="True" ToolTip="Enter username"></asp:TextBox>
                     </td>
                     <td>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidatorUsername" runat="server" ControlToValidate="tbUsername" Display="Dynamic" ErrorMessage="Username required"></asp:RequiredFieldValidator>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidatorUsername" runat="server" ControlToValidate="tbUsername" Display="None" ErrorMessage="Username required"></asp:RequiredFieldValidator>
                     </td>
                 </tr>
                 <tr>
@@ -56,7 +56,7 @@
                         <asp:TextBox ID="tbPassword" runat="server" CausesValidation="True" OnTextChanged="tbPassword_TextChanged" TextMode="Password" ToolTip="Enter password"></asp:TextBox>
                     </td>
                     <td>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidatorPassword" runat="server" ControlToValidate="tbPassword" Display="Dynamic" ErrorMessage="Password is required"></asp:RequiredFieldValidator>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidatorPassword" runat="server" ControlToValidate="tbPassword" Display="None" ErrorMessage="Password is required"></asp:RequiredFieldValidator>
                     </td>
                 </tr>
                 <tr>
@@ -89,7 +89,9 @@
                     <td>&nbsp;</td>
                 </tr>
                 <tr>
-                    <td class="auto-style2">&nbsp;</td>
+                    <td class="auto-style2">
+                        <asp:ValidationSummary ID="ValidationSummaryLoginPage" runat="server" HeaderText="Errors:" />
+                    </td>
                     <td class="auto-style3">&nbsp;</td>
                     <td>&nbsp;</td>
                 </tr>
