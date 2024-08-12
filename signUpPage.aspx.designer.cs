@@ -51,6 +51,15 @@ namespace Quizify
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidatorUsername;
 
         /// <summary>
+        /// cv1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator cv1;
+
+        /// <summary>
         /// lblEmail control.
         /// </summary>
         /// <remarks>
@@ -123,6 +132,15 @@ namespace Quizify
         protected global::System.Web.UI.WebControls.CustomValidator CustomValidatorMobileNo;
 
         /// <summary>
+        /// lbalert control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbalert;
+
+        /// <summary>
         /// lblRole control.
         /// </summary>
         /// <remarks>
@@ -159,13 +177,13 @@ namespace Quizify
         protected global::System.Web.UI.WebControls.TextBox tbPassword;
 
         /// <summary>
-        /// RequiredFieldValidatorPassword control.
+        /// res_pass control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidatorPassword;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator res_pass;
 
         /// <summary>
         /// lblConfirmPassword control.
@@ -186,22 +204,22 @@ namespace Quizify
         protected global::System.Web.UI.WebControls.TextBox tbConfirmPassword;
 
         /// <summary>
-        /// RequiredFieldValidatorConfirmPassword control.
+        /// req_con_pass control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidatorConfirmPassword;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator req_con_pass;
 
         /// <summary>
-        /// CompareValidatorPassword control.
+        /// cmp_valid_pass control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CompareValidator CompareValidatorPassword;
+        protected global::System.Web.UI.WebControls.CompareValidator cmp_valid_pass;
 
         /// <summary>
         /// btnSignUp control.

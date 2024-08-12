@@ -27,6 +27,7 @@
             height: 26px;
         }
     </style>
+   
 </head>
 <body>
     <form id="form1" runat="server">
@@ -41,6 +42,7 @@
                     </td>
                     <td>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidatorUsername" runat="server" ControlToValidate="tbUsername" Display="None" ErrorMessage="Username required"></asp:RequiredFieldValidator>
+                        <asp:CustomValidator ID="CustomValidator1" runat="server" ClientValidationFunction="redundancy_error" ControlToValidate="tbUsername" Display="Dynamic" ErrorMessage="Enter Valid Name" OnServerValidate="redundancy_error"></asp:CustomValidator>
                     </td>
                 </tr>
                 <tr>
@@ -67,7 +69,7 @@
                 <tr>
                     <td class="auto-style2">&nbsp;</td>
                     <td class="auto-style3">
-                        <asp:Button ID="btnLogin" runat="server" Height="29px" Text="Login" ToolTip="Login" />
+                        <asp:Button ID="btnLogin" runat="server" Height="29px" Text="Login" ToolTip="Login" OnClick="btnLogin_Click" />
                     </td>
                     <td>&nbsp;</td>
                 </tr>
