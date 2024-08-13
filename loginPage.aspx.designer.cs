@@ -33,13 +33,13 @@ namespace Quizify
         protected global::System.Web.UI.WebControls.Label lblUsername;
 
         /// <summary>
-        /// tbUsername control.
+        /// tbemail control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbUsername;
+        protected global::System.Web.UI.WebControls.TextBox tbemail;
 
         /// <summary>
         /// RequiredFieldValidatorUsername control.
@@ -51,13 +51,13 @@ namespace Quizify
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidatorUsername;
 
         /// <summary>
-        /// CustomValidator1 control.
+        /// email_format_1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator CustomValidator1;
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator email_format_1;
 
         /// <summary>
         /// lblPassword control.
@@ -78,13 +78,22 @@ namespace Quizify
         protected global::System.Web.UI.WebControls.TextBox tbPassword;
 
         /// <summary>
-        /// RequiredFieldValidatorPassword control.
+        /// rqv_1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidatorPassword;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rqv_1;
+
+        /// <summary>
+        /// cv_pass_email control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator cv_pass_email;
 
         /// <summary>
         /// btnLogin control.

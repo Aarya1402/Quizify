@@ -35,14 +35,15 @@
             <table class="auto-style1">
                 <tr>
                     <td class="auto-style2">
-                        <asp:Label ID="lblUsername" runat="server" EnableTheming="True" Text="Username: "></asp:Label>
+                        <asp:Label ID="lblUsername" runat="server" EnableTheming="True" Text="Email: "></asp:Label>
                     </td>
                     <td class="auto-style3">
-                        <asp:TextBox ID="tbUsername" runat="server" AutoPostBack="True" CausesValidation="True" ToolTip="Enter username"></asp:TextBox>
+                        <asp:TextBox ID="tbemail" runat="server" AutoPostBack="True" CausesValidation="True" ToolTip="Enter username"></asp:TextBox>
                     </td>
                     <td>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidatorUsername" runat="server" ControlToValidate="tbUsername" Display="None" ErrorMessage="Username required"></asp:RequiredFieldValidator>
-                        <asp:CustomValidator ID="CustomValidator1" runat="server" ClientValidationFunction="redundancy_error" ControlToValidate="tbUsername" Display="Dynamic" ErrorMessage="Enter Valid Name" OnServerValidate="redundancy_error"></asp:CustomValidator>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidatorUsername" runat="server" ControlToValidate="tbemail" Display="Dynamic" ErrorMessage="Username required"></asp:RequiredFieldValidator>
+                        <asp:RegularExpressionValidator ID="email_format_1" runat="server" ControlToValidate="tbEmail" Display="Dynamic" ErrorMessage="Invalid email format"    ValidationExpression="^[\w\.-]+@[\w\.-]+\.\w{2,4}$"></asp:RegularExpressionValidator>
+
                     </td>
                 </tr>
                 <tr>
@@ -58,8 +59,20 @@
                         <asp:TextBox ID="tbPassword" runat="server" CausesValidation="True" OnTextChanged="tbPassword_TextChanged" TextMode="Password" ToolTip="Enter password"></asp:TextBox>
                     </td>
                     <td>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidatorPassword" runat="server" ControlToValidate="tbPassword" Display="None" ErrorMessage="Password is required"></asp:RequiredFieldValidator>
+                        <asp:RequiredFieldValidator ID="rqv_1" runat="server" ControlToValidate="tbPassword" Display="None" ErrorMessage="Password is required"></asp:RequiredFieldValidator>
                     </td>
+                </tr>
+                <tr>
+                    <td class="auto-style2">&nbsp;</td>
+                    <td class="auto-style3">&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td class="auto-style2">&nbsp;</td>
+                    <td class="auto-style3">
+                        <asp:CustomValidator ID="cv_pass_email" runat="server" ControlToValidate="tbPassword" ErrorMessage="CustomValidator" OnServerValidate="check_password_and_email" ValidationGroup="login_auth"></asp:CustomValidator>
+                    </td>
+                    <td>&nbsp;</td>
                 </tr>
                 <tr>
                     <td class="auto-style2">&nbsp;</td>

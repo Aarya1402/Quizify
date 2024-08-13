@@ -71,6 +71,7 @@
     <Content Include="App_Data\Users_log.ldf">
       <DependentUpon>Users.mdf</DependentUpon>
     </Content>
+    <Content Include="Subjects\Home.aspx" />
     <Content Include="Web.config" />
     <Content Include="loginPage.aspx" />
     <Content Include="signUpPage.aspx" />
@@ -90,6 +91,13 @@
     </Compile>
     <Compile Include="signUpPage.aspx.designer.cs">
       <DependentUpon>signUpPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Subjects\Home.aspx.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Subjects\Home.aspx.designer.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
