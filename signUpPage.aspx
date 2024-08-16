@@ -95,23 +95,23 @@
                         <asp:Label ID="lblPassword" runat="server" Text="Password:"></asp:Label>
                     </td>
                     <td class="auto-style10">
-                        <asp:TextBox ID="tbPassword" runat="server" AutoPostBack="True" CausesValidation="True" TextMode="Password" ToolTip="Enter password"></asp:TextBox>
+                        <asp:TextBox ID="tbPassword" runat="server" AutoPostBack="False" CausesValidation="True" TextMode="Password" ToolTip="Enter password"></asp:TextBox>
                     </td>
-                    <!--<td class="auto-style2">
+                    <td class="auto-style2">
                         <asp:RequiredFieldValidator ID="res_pass" runat="server" ControlToValidate="tbPassword" Display="Dynamic" ErrorMessage="Enter Password"></asp:RequiredFieldValidator>
-                    </td>-->
+                    </td>
                 </tr>
                 <tr>
-                    <!--<td class="auto-style5">
+                   <td class="auto-style5">
                         <asp:Label ID="lblConfirmPassword" runat="server" Text="Confirm Password:"></asp:Label>
                     </td>
                     <td class="auto-style9">
-                        <asp:TextBox ID="tbConfirmPassword" runat="server" AutoPostBack="True" CausesValidation="True" TextMode="Password" ToolTip="Re-enter password "></asp:TextBox>
+                        <asp:TextBox ID="tbConfirmPassword" runat="server" AutoPostBack="False" CausesValidation="True" TextMode="Password" ToolTip="Re-enter password "></asp:TextBox>
                     </td>
                     <td class="auto-style6">  
                         <asp:RequiredFieldValidator ID="req_con_pass" runat="server" ControlToValidate="tbConfirmPassword" Display="Dynamic" ErrorMessage="Re-enter Password"></asp:RequiredFieldValidator>
                         <asp:CompareValidator ID="cmp_valid_pass" runat="server" ControlToCompare="tbPassword" ControlToValidate="tbConfirmPassword" ErrorMessage="Password doesn't match"></asp:CompareValidator>
-                    </td>-->
+                    </td>
                 </tr>
                 <tr>
                     <td class="auto-style3">&nbsp;</td>

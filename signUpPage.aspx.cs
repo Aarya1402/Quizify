@@ -57,13 +57,14 @@ namespace Quizify
             {
                 con.Open();
                 lbalert.Text = "Connection opened.";
-                cmd.CommandText = "SELECT * FROM [User] WHERE Email = @email";
+                cmd.CommandText = "SELECT COUNT(*) FROM [User] WHERE Email = @Email";
                 cmd.Parameters.Clear();
-                cmd.Parameters.AddWithValue("@email", email);
+                cmd.Parameters.AddWithValue("@Email", email);
 
-                SqlDataReader rdr = cmd.ExecuteReader();
-                //lbalert.Text = "Redundancy check completed.";
-                return rdr==null;
+                int count = (int)cmd.ExecuteScalar();
+                lbalert.Text = "Redundancy check completed. Count: " + count;
+
+                return count == 0;
             }
             catch (Exception ex)
             {
@@ -76,6 +77,7 @@ namespace Quizify
                 lbalert.Text = "Connection closed.";
             }
         }
+
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -120,6 +122,7 @@ namespace Quizify
                 else
                 {
                     Response.Write("User already exist!!");
+                    hlLogin.Focus();
      //               lbalert.Text = "User already exists.";
    //                 cv1.ErrorMessage = "User already exists";
  //                   cv1.IsValid = false;
