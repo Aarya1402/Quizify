@@ -64,7 +64,7 @@ namespace Quizify.Subjects
                     Response.Write($"{property.Value}<br />");
                 }
             }
-        }
+        } 
 
         private void RenderJsonArray(JArray jsonArray)
         {
