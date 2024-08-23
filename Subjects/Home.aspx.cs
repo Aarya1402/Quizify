@@ -52,22 +52,22 @@ namespace Quizify.Subjects
                 conn.Open();
 
                 // Insert fixed Subject entry if it doesn't exist
-                if (!RecordExists(conn, "Subject", 2))
+                int subjectId = 5;  // Fixed subject_id = 5 for MySQL
+                if (!RecordExists(conn, "Subject", subjectId))
                 {
-                    InsertSubject(conn, 2, "PHP", null);
+                    InsertSubject(conn, subjectId, "MySQL", null);
                 }
 
-                // Insert data into Question and Option tables with subject_id = 2
-                int subjectId = 2;  // Use fixed subject_id = 2 for all questions
-
-                if (!RecordExists(conn, "Question", (int)jsonObject["id"]))
+                // Insert data into Question and Option tables with subject_id = 5
+                int questionId = (int)jsonObject["id"];
+                if (!RecordExists(conn, "Question", questionId))
                 {
-                    InsertQuestion(conn, (int)jsonObject["id"], (string)jsonObject["question"], subjectId, FindCorrectAnswer(jsonObject));
+                    InsertQuestion(conn, questionId, (string)jsonObject["question"], subjectId, FindCorrectAnswer(jsonObject));
                 }
 
-                if (!RecordExists(conn, "Option", (int)jsonObject["id"]))
+                if (!RecordExists(conn, "Option", questionId))
                 {
-                    InsertCorrectOption(conn, jsonObject, (int)jsonObject["id"], subjectId);
+                    InsertCorrectOption(conn, jsonObject, questionId, subjectId);
                 }
 
                 conn.Close();

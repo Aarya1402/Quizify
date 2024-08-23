@@ -23,7 +23,7 @@ namespace Quizify
             {
                 try
                 {
-                    string apiUrl = "https://quizapi.io/api/v1/questions?apiKey=LqFa0o92b68fjUZQoyR847u17hYiZVjA12ihPBq9&limit=7&tags=PHP";
+                    string apiUrl = "https://quizapi.io/api/v1/questions?apiKey=LqFa0o92b68fjUZQoyR847u17hYiZVjA12ihPBq9&limit=10&tags=MySQL";
                     HttpResponseMessage response = await client.GetAsync(apiUrl);
 
                     if (response.IsSuccessStatusCode)
