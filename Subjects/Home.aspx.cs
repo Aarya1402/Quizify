@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Data.SqlClient;
+using System.Web.Configuration;
 using System.Web.UI;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -9,80 +11,137 @@ namespace Quizify.Subjects
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            // Retrieve the data from the Application state (or from a static variable)
-            string jsonData = Application["ApiData"] as string; // or SecureDataStore.GetData();
+            string jsonData = Application["ApiData"] as string;
 
-            // Check if data exists
             if (!string.IsNullOrEmpty(jsonData))
             {
                 try
                 {
-                    // Determine if the JSON is an object or an array
                     JToken parsedData = JToken.Parse(jsonData);
-
-                    if (parsedData is JObject)
+                    if (parsedData is JObject jsonObject)
                     {
-                        // Handle JSON object
-                        RenderJsonObject(parsedData as JObject);
+                        ProcessData(jsonObject);
                     }
-                    else if (parsedData is JArray)
+                    else if (parsedData is JArray jsonArray)
                     {
-                        // Handle JSON array
-                        RenderJsonArray(parsedData as JArray);
+                        foreach (var item in jsonArray)
+                        {
+                            if (item is JObject obj)
+                            {
+                                ProcessData(obj);
+                            }
+                        }
                     }
                 }
-                catch (JsonReaderException ex)
+                catch (JsonReaderException)
                 {
                     Response.Write("<p>Error parsing JSON data.</p>");
-                    // Log the exception (ex.Message) if needed
                 }
             }
             else
             {
-                // Handle the case where no data is available
                 Response.Write("<p>No data available</p>");
             }
         }
 
-        private void RenderJsonObject(JObject jsonObject)
+        private void ProcessData(JObject jsonObject)
         {
-            foreach (var property in jsonObject.Properties())
+            using (SqlConnection conn = new SqlConnection())
             {
-                Response.Write($"<strong>{property.Name}:</strong> ");
+                conn.ConnectionString = WebConfigurationManager.ConnectionStrings["QuizCon"].ConnectionString;
+                conn.Open();
 
-                if (property.Value.Type == JTokenType.Array)
+                // Insert fixed Subject entry if it doesn't exist
+                if (!RecordExists(conn, "Subject", 2))
                 {
-                    Response.Write("<ul>");
-                    foreach (var item in property.Value)
+                    InsertSubject(conn, 2, "PHP", null);
+                }
+
+                // Insert data into Question and Option tables with subject_id = 2
+                int subjectId = 2;  // Use fixed subject_id = 2 for all questions
+
+                if (!RecordExists(conn, "Question", (int)jsonObject["id"]))
+                {
+                    InsertQuestion(conn, (int)jsonObject["id"], (string)jsonObject["question"], subjectId, FindCorrectAnswer(jsonObject));
+                }
+
+                if (!RecordExists(conn, "Option", (int)jsonObject["id"]))
+                {
+                    InsertCorrectOption(conn, jsonObject, (int)jsonObject["id"], subjectId);
+                }
+
+                conn.Close();
+            }
+        }
+
+        private void InsertSubject(SqlConnection conn, int id, string name, string description)
+        {
+            string query = "INSERT INTO Subject (Id, name, description) VALUES (@Id, @Name, @Description)";
+            using (SqlCommand cmd = new SqlCommand(query, conn))
+            {
+                cmd.Parameters.AddWithValue("@Id", id);
+                cmd.Parameters.AddWithValue("@Name", name);
+                cmd.Parameters.AddWithValue("@Description", description ?? (object)DBNull.Value);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        private void InsertQuestion(SqlConnection conn, int id, string question, int subjectId, string correctAnswer)
+        {
+            string query = "INSERT INTO Question (Id, question, subject_id, correct_ans) VALUES (@Id, @Question, @SubjectId, @CorrectAns)";
+            using (SqlCommand cmd = new SqlCommand(query, conn))
+            {
+                cmd.Parameters.AddWithValue("@Id", id);
+                cmd.Parameters.AddWithValue("@Question", question);
+                cmd.Parameters.AddWithValue("@SubjectId", subjectId);
+                cmd.Parameters.AddWithValue("@CorrectAns", correctAnswer);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        private void InsertCorrectOption(SqlConnection conn, JObject jsonObject, int questionId, int subjectId)
+        {
+            JObject options = (JObject)jsonObject["answers"];
+            string correctAnswer = FindCorrectAnswer(jsonObject);
+            foreach (var option in options.Properties())
+            {
+                if (option.Value.ToString() == correctAnswer)
+                {
+                    string query = "INSERT INTO [Option] (Id, options, question_id) VALUES (@Id, @Option, @QuestionId)";
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
-                        Response.Write($"<li>{item}</li>");
+                        cmd.Parameters.AddWithValue("@Id", questionId);
+                        cmd.Parameters.AddWithValue("@Option", option.Value.ToString());
+                        cmd.Parameters.AddWithValue("@QuestionId", questionId);
+                        cmd.ExecuteNonQuery();
                     }
-                    Response.Write("</ul>");
-                }
-                else
-                {
-                    Response.Write($"{property.Value}<br />");
+                    break;
                 }
             }
-        } 
+        }
 
-        private void RenderJsonArray(JArray jsonArray)
+        private bool RecordExists(SqlConnection conn, string tableName, int id)
         {
-            Response.Write("<ul>");
-            foreach (var item in jsonArray)
+            string query = $"SELECT COUNT(*) FROM [{tableName}] WHERE Id = @Id";
+            using (SqlCommand cmd = new SqlCommand(query, conn))
             {
-                if (item is JObject)
+                cmd.Parameters.AddWithValue("@Id", id);
+                return (int)cmd.ExecuteScalar() > 0;
+            }
+        }
+
+        private string FindCorrectAnswer(JObject jsonObject)
+        {
+            JObject correctAnswers = (JObject)jsonObject["correct_answers"];
+            foreach (var correctAnswer in correctAnswers.Properties())
+            {
+                if (correctAnswer.Value.ToString().ToLower() == "true")
                 {
-                    Response.Write("<li>");
-                    RenderJsonObject(item as JObject);
-                    Response.Write("</li>");
-                }
-                else
-                {
-                    Response.Write($"<li>{item}</li>");
+                    string answerKey = correctAnswer.Name.Replace("_correct", "");
+                    return (string)jsonObject["answers"][answerKey];
                 }
             }
-            Response.Write("</ul>");
+            return string.Empty;
         }
     }
 }
