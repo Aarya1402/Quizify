@@ -108,7 +108,10 @@
       <DependentUpon>Users.mdf</DependentUpon>
     </Content>
     <Content Include="Global.asax" />
+    <Content Include="JustInsertion.aspx" />
     <Content Include="Subjects\Home.aspx" />
+    <Content Include="Subjects\JavaScript.aspx" />
+    <Content Include="Subjects\SubjectDetails.aspx" />
     <Content Include="Web.config" />
     <Content Include="loginPage.aspx" />
     <Content Include="signUpPage.aspx" />
@@ -116,6 +119,13 @@
   <ItemGroup>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="JustInsertion.aspx.cs">
+      <DependentUpon>JustInsertion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="JustInsertion.aspx.designer.cs">
+      <DependentUpon>JustInsertion.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="loginPage.aspx.cs">
@@ -138,6 +148,20 @@
     </Compile>
     <Compile Include="Subjects\Home.aspx.designer.cs">
       <DependentUpon>Home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Subjects\JavaScript.aspx.cs">
+      <DependentUpon>JavaScript.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Subjects\JavaScript.aspx.designer.cs">
+      <DependentUpon>JavaScript.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Subjects\SubjectDetails.aspx.cs">
+      <DependentUpon>SubjectDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Subjects\SubjectDetails.aspx.designer.cs">
+      <DependentUpon>SubjectDetails.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

@@ -118,6 +118,7 @@ namespace Quizify
                     lbalert.Text = "Email is not redundant. Proceeding with data insertion.";
                     int rows = InsertData(_username, _password, _email, _role);
                     lbalert.Text = "Sign up successful.";
+                    Response.Redirect("~/Home.aspx");
                 }
                 else
                 {

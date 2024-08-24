@@ -11,7 +11,7 @@ namespace Quizify.Subjects
 {
 
 
-    public partial class Home
+    public partial class SubjectDetails
     {
 
         /// <summary>
@@ -24,12 +24,30 @@ namespace Quizify.Subjects
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
-        /// SubjectsGridView control.
+        /// AgreeCheckBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView SubjectsGridView;
+        protected global::System.Web.UI.WebControls.CheckBox AgreeCheckBox;
+
+        /// <summary>
+        /// SubmitButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button SubmitButton;
+
+        /// <summary>
+        /// SubjectLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label SubjectLabel;
     }
 }
