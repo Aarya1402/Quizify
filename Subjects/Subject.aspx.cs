@@ -13,21 +13,34 @@ namespace Quizify.Subjects
     public partial class Subject : System.Web.UI.Page
     {
         private int currentQuestionIndex = 0;
-        private DataTable questionsTable;
+        public DataTable questionsTable;
         private int subjectId;
-        private Dictionary<int, int> userAnswers = new Dictionary<int, int>();
+        private Dictionary<int, int> userAnswers
+        {
+            get
+            {
+                if (Session["UserAnswers"] == null)
+                    Session["UserAnswers"] = new Dictionary<int, int>();
+                return (Dictionary<int, int>)Session["UserAnswers"];
+            }
+            set { Session["UserAnswers"] = value; }
+        }
         private int correctAnswers = 0;
         private int incorrectAnswers = 0;
         private int skippedAnswers = 0;
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["QuestionsTable"] != null)
+            {
+                questionsTable = (DataTable)Session["QuestionsTable"];
+            }
+
             if (!IsPostBack)
             {
                 if (int.TryParse(Request.QueryString["id"], out subjectId))
                 {
-                    if (Session["CurrentQuestionIndex"] == null)
-                        Session["CurrentQuestionIndex"] = 0;
+                    Session["CurrentQuestionIndex"] = 0;
 
                     LoadQuestions(subjectId);
                     ShowQuestion((int)Session["CurrentQuestionIndex"]);
@@ -38,6 +51,7 @@ namespace Quizify.Subjects
                 }
             }
         }
+
 
         private void LoadQuestions(int subjectId)
         {
@@ -56,11 +70,7 @@ namespace Quizify.Subjects
                     adapter.Fill(dataTable);
                     questionsTable = dataTable;
 
-                    /*foreach(DataRow row in questionsTable.Rows)
-                    {
-                        Response.Write(row["question"].ToString());
-                    }*/
-
+                    Session["QuestionsTable"] = questionsTable;
                 }
             }
         }
@@ -74,10 +84,9 @@ namespace Quizify.Subjects
                                                   .Select(g => g.First())
                                                   .ToList();
 
-            if (index < 0 || index >= distinctQuestions.Count) return; // Check for valid index
+            if (index < 0 || index >= distinctQuestions.Count) return;
 
             DataRow currentQuestionRow = distinctQuestions[index];
-
             int questionId = int.Parse(currentQuestionRow["Id"].ToString());
 
             QuestionLabel.Text = currentQuestionRow["Question"].ToString();
@@ -94,7 +103,17 @@ namespace Quizify.Subjects
 
             if (userAnswers.ContainsKey(questionId))
             {
-                OptionsList.SelectedValue = userAnswers[questionId].ToString();
+                string selectedValue = userAnswers[questionId].ToString();
+                ListItem selectedItem = OptionsList.Items.FindByValue(selectedValue);
+
+                if (selectedItem != null)
+                {
+                    selectedItem.Selected = true; // Ensure the item is marked as selected
+                }
+                else
+                {
+                    OptionsList.ClearSelection();
+                }
             }
             else
             {
@@ -105,9 +124,6 @@ namespace Quizify.Subjects
             NextButton.Visible = true;
             FinishButton.Visible = true;
         }
-
-
-
 
         protected void PrevButton_Click(object sender, EventArgs e)
         {
@@ -120,10 +136,6 @@ namespace Quizify.Subjects
                 Session["CurrentQuestionIndex"] = currentIndex;
                 ShowQuestion(currentIndex);
             }
-            else
-            {
-                ShowQuestion(currentIndex);
-            }
         }
 
         protected void NextButton_Click(object sender, EventArgs e)
@@ -132,14 +144,10 @@ namespace Quizify.Subjects
 
             int currentIndex = (int)Session["CurrentQuestionIndex"];
 
-            if (currentIndex>0)
+            if (currentIndex < questionsTable.Rows.Count)
             {
-                currentIndex--;
+                ++currentIndex;
                 Session["CurrentQuestionIndex"] = currentIndex;
-                ShowQuestion(currentIndex);
-            }
-            else
-            {
                 ShowQuestion(currentIndex);
             }
         }
@@ -198,6 +206,5 @@ namespace Quizify.Subjects
                 }
             }
         }
-
     }
 }
