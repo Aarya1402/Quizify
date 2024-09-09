@@ -33,13 +33,22 @@ namespace Quizify.Subjects
         protected global::System.Web.UI.WebControls.Label QuestionLabel;
 
         /// <summary>
-        /// OptionsList control.
+        /// OptionsPanel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButtonList OptionsList;
+        protected global::System.Web.UI.WebControls.Panel OptionsPanel;
+
+        /// <summary>
+        /// HiddenFieldAnswers control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField HiddenFieldAnswers;
 
         /// <summary>
         /// PrevButton control.

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -6,28 +7,19 @@ using System.Linq;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.UI;
+using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
 namespace Quizify.Subjects
 {
     public partial class Subject : System.Web.UI.Page
     {
-        private int currentQuestionIndex = 0;
-        public DataTable questionsTable;
-        private int subjectId;
-        private Dictionary<int, int> userAnswers
-        {
-            get
-            {
-                if (Session["UserAnswers"] == null)
-                    Session["UserAnswers"] = new Dictionary<int, int>();
-                return (Dictionary<int, int>)Session["UserAnswers"];
-            }
-            set { Session["UserAnswers"] = value; }
-        }
+        private DataTable questionsTable;
+        private Dictionary<int, int> userAnswers = new Dictionary<int, int>();
         private int correctAnswers = 0;
         private int incorrectAnswers = 0;
         private int skippedAnswers = 0;
+
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -38,10 +30,9 @@ namespace Quizify.Subjects
 
             if (!IsPostBack)
             {
-                if (int.TryParse(Request.QueryString["id"], out subjectId))
+                if (int.TryParse(Request.QueryString["id"], out int subjectId))
                 {
                     Session["CurrentQuestionIndex"] = 0;
-
                     LoadQuestions(subjectId);
                     ShowQuestion((int)Session["CurrentQuestionIndex"]);
                 }
@@ -50,8 +41,17 @@ namespace Quizify.Subjects
                     Response.Write("<p>Invalid subject ID.</p>");
                 }
             }
-        }
+            else
+            {
+                string jsonUserAnswers = HiddenFieldAnswers.Value;
+                if (!string.IsNullOrEmpty(jsonUserAnswers))
+                {
+                    var userAnswers = JsonConvert.DeserializeObject<Dictionary<int, int>>(jsonUserAnswers);
 
+                    CalculateScore(userAnswers);
+                }
+            }
+        }
 
         private void LoadQuestions(int subjectId)
         {
@@ -91,39 +91,40 @@ namespace Quizify.Subjects
 
             QuestionLabel.Text = currentQuestionRow["Question"].ToString();
 
-            OptionsList.Items.Clear();
+            OptionsPanel.Controls.Clear();
 
             var options = questionsTable.AsEnumerable()
                                         .Where(row => row.Field<int>("Id") == questionId);
 
             foreach (DataRow option in options)
             {
-                OptionsList.Items.Add(new ListItem(option["Options"].ToString(), option["OptionId"].ToString()));
+                var optionDiv = new HtmlGenericControl("div");
+                optionDiv.InnerHtml = option["Options"].ToString();
+                optionDiv.Attributes.Add("class", "option-box");
+                optionDiv.Attributes.Add("data-question-id", questionId.ToString());
+                optionDiv.Attributes.Add("data-option-id", option["OptionId"].ToString());
+                optionDiv.Attributes.Add("onclick", "selectOption(this)");
+                OptionsPanel.Controls.Add(optionDiv);
             }
 
+            // Select the saved option if available
             if (userAnswers.ContainsKey(questionId))
             {
                 string selectedValue = userAnswers[questionId].ToString();
-                ListItem selectedItem = OptionsList.Items.FindByValue(selectedValue);
-
-                if (selectedItem != null)
+                var selectedOptionDiv = OptionsPanel.Controls.OfType<HtmlGenericControl>()
+                                                             .FirstOrDefault(div => div.Attributes["data-option-id"] == selectedValue);
+                if (selectedOptionDiv != null)
                 {
-                    selectedItem.Selected = true; // Ensure the item is marked as selected
-                }
-                else
-                {
-                    OptionsList.ClearSelection();
+                    selectedOptionDiv.Attributes["class"] += " selected";
                 }
             }
-            else
-            {
-                OptionsList.ClearSelection();
-            }
 
-            PrevButton.Visible = true;
-            NextButton.Visible = true;
+            PrevButton.Visible = index > 0;
+            NextButton.Visible = index < distinctQuestions.Count - 1;
             FinishButton.Visible = true;
         }
+
+
 
         protected void PrevButton_Click(object sender, EventArgs e)
         {
@@ -136,6 +137,10 @@ namespace Quizify.Subjects
                 Session["CurrentQuestionIndex"] = currentIndex;
                 ShowQuestion(currentIndex);
             }
+            else
+            {
+                ShowQuestion(currentIndex);
+            }
         }
 
         protected void NextButton_Click(object sender, EventArgs e)
@@ -146,8 +151,12 @@ namespace Quizify.Subjects
 
             if (currentIndex < questionsTable.Rows.Count)
             {
-                ++currentIndex;
+                currentIndex++;
                 Session["CurrentQuestionIndex"] = currentIndex;
+                ShowQuestion(currentIndex);
+            }
+            else
+            {
                 ShowQuestion(currentIndex);
             }
         }
@@ -155,7 +164,7 @@ namespace Quizify.Subjects
         protected void FinishButton_Click(object sender, EventArgs e)
         {
             SaveUserAnswer();
-            CalculateScore();
+            CalculateScore(userAnswers);
             Response.Write($"<p>Test Completed! <br/> Correct Answers: {correctAnswers} <br/> Incorrect Answers: {incorrectAnswers} <br/> Skipped Questions: {skippedAnswers}</p>");
         }
 
@@ -163,48 +172,88 @@ namespace Quizify.Subjects
         {
             if (questionsTable == null || questionsTable.Rows.Count == 0) return;
 
-            DataRow currentQuestionRow = questionsTable.Rows[currentQuestionIndex];
+            int currentIndex = (int)Session["CurrentQuestionIndex"];
+            var distinctQuestions = questionsTable.AsEnumerable()
+                                                  .GroupBy(row => row.Field<int>("Id"))
+                                                  .Select(g => g.First())
+                                                  .ToList();
+
+            DataRow currentQuestionRow = distinctQuestions[currentIndex];
             int questionId = int.Parse(currentQuestionRow["Id"].ToString());
 
-            if (OptionsList.SelectedItem != null)
+            var selectedOptionId = Request.Form["SelectedOption" + questionId];
+
+            if (!string.IsNullOrEmpty(selectedOptionId))
             {
-                int selectedOptionId = int.Parse(OptionsList.SelectedValue);
-                userAnswers[questionId] = selectedOptionId;
+                userAnswers[questionId] = int.Parse(selectedOptionId);
             }
             else if (!userAnswers.ContainsKey(questionId))
             {
                 userAnswers[questionId] = -1;
             }
+
+            Session["UserAnswers"] = userAnswers;
         }
 
-        private void CalculateScore()
+
+        private void CalculateScore(Dictionary<int, int> userAnswers)
         {
+            correctAnswers = 0;
+            incorrectAnswers = 0;
+            skippedAnswers = 0;
+
             foreach (DataRow questionRow in questionsTable.Rows)
             {
                 int questionId = int.Parse(questionRow["Id"].ToString());
-                int correctOptionId = int.Parse(questionRow["Correct_ans"].ToString());
 
-                if (userAnswers.ContainsKey(questionId))
+                if (int.TryParse(questionRow["Correct_ans"].ToString(), out int correctOptionId))
                 {
-                    int userAnswerId = userAnswers[questionId];
-                    if (userAnswerId == -1)
+                    Console.WriteLine($"Question ID: {questionId}, Correct Option ID: {correctOptionId}");
+
+                    if (userAnswers.TryGetValue(questionId, out int userAnswerId))
                     {
-                        skippedAnswers++;
-                    }
-                    else if (userAnswerId == correctOptionId)
-                    {
-                        correctAnswers++;
+                        Console.WriteLine($"User Answer ID: {userAnswerId}");
+
+                        if (userAnswerId == -1)
+                        {
+                            skippedAnswers++;
+                        }
+                        else if (userAnswerId == correctOptionId)
+                        {
+                            correctAnswers++;
+                        }
+                        else
+                        {
+                            incorrectAnswers++;
+                        }
                     }
                     else
                     {
-                        incorrectAnswers++;
+                        skippedAnswers++;
                     }
                 }
                 else
                 {
+
+                    Console.WriteLine($"Failed to convert Correct_ans to int. Data: {questionRow["Correct_ans"]}");
                     skippedAnswers++;
                 }
             }
+
+            Console.WriteLine($"Correct Answers: {correctAnswers}");
+            Console.WriteLine($"Incorrect Answers: {incorrectAnswers}");
+            Console.WriteLine($"Skipped Questions: {skippedAnswers}");
         }
+
+
+        protected void OptionsList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SaveUserAnswer();
+
+            int currentIndex = (int)Session["CurrentQuestionIndex"];
+            ShowQuestion(currentIndex);
+        }
+
+
     }
 }
