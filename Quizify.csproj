@@ -110,7 +110,8 @@
     <Content Include="Global.asax" />
     <Content Include="JustInsertion.aspx" />
     <Content Include="Subjects\Home.aspx" />
-    <Content Include="Subjects\JavaScript.aspx" />
+    <Content Include="Subjects\styles.css" />
+    <Content Include="Subjects\Subject.aspx" />
     <Content Include="Subjects\SubjectDetails.aspx" />
     <Content Include="Web.config" />
     <Content Include="loginPage.aspx" />
@@ -149,12 +150,12 @@
     <Compile Include="Subjects\Home.aspx.designer.cs">
       <DependentUpon>Home.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Subjects\JavaScript.aspx.cs">
-      <DependentUpon>JavaScript.aspx</DependentUpon>
+    <Compile Include="Subjects\Subject.aspx.cs">
+      <DependentUpon>Subject.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Subjects\JavaScript.aspx.designer.cs">
-      <DependentUpon>JavaScript.aspx</DependentUpon>
+    <Compile Include="Subjects\Subject.aspx.designer.cs">
+      <DependentUpon>Subject.aspx</DependentUpon>
     </Compile>
     <Compile Include="Subjects\SubjectDetails.aspx.cs">
       <DependentUpon>SubjectDetails.aspx</DependentUpon>

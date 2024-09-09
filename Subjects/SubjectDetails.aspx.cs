@@ -59,30 +59,9 @@ namespace Quizify.Subjects
                 int subjectId = int.Parse(Request.QueryString["id"]);
 
                 // Redirect to the respective subject page with the subject ID in the query string
-                if (subjectId == 1)
-                {
-                    Response.Redirect($"~/Subjects/JavaScript.aspx?id={subjectId}");
-                }
-                else if (subjectId == 2)
-                {
-                    Response.Redirect($"~/Subjects/HTML.aspx?id={subjectId}");
-                }
-                else if (subjectId == 3)
-                {
-                    Response.Redirect($"~/Subjects/Python.aspx?id={subjectId}");
-                }
-                else if (subjectId == 4)
-                {
-                    Response.Redirect($"~/Subjects/DevOps.aspx?id={subjectId}");
-                }
-                else if (subjectId == 5)
-                {
-                    Response.Redirect($"~/Subjects/MySQL.aspx?id={subjectId}");
-                }
-                else
-                {
-                    Response.Write("<p>Invalid subject selected.</p>");
-                }
+
+                Response.Redirect($"~/Subjects/Subject.aspx?id={subjectId}");  
+           
             }
             else
             {
