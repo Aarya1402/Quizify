@@ -109,6 +109,8 @@
     </Content>
     <Content Include="Global.asax" />
     <Content Include="JustInsertion.aspx" />
+    <Content Include="Subjects\MySubjects.aspx" />
+    <Content Include="Subjects\Results.aspx" />
     <Content Include="Subjects\Home.aspx" />
     <Content Include="Subjects\styles.css" />
     <Content Include="Subjects\Subject.aspx" />
@@ -135,6 +137,20 @@
     </Compile>
     <Compile Include="loginPage.aspx.designer.cs">
       <DependentUpon>loginPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Subjects\MySubjects.aspx.cs">
+      <DependentUpon>MySubjects.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Subjects\MySubjects.aspx.designer.cs">
+      <DependentUpon>MySubjects.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Subjects\Results.aspx.cs">
+      <DependentUpon>Results.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Subjects\Results.aspx.designer.cs">
+      <DependentUpon>Results.aspx</DependentUpon>
     </Compile>
     <Compile Include="signUpPage.aspx.cs">
       <DependentUpon>signUpPage.aspx</DependentUpon>

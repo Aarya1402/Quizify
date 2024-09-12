@@ -50,24 +50,22 @@ namespace Quizify.Subjects
         {
             if (AgreeCheckBox.Checked)
             {
-                // Confirmation message
                 Response.Write("<p>Registration successful!</p>");
-
-                // Handle additional registration logic here (if any)
-
-                // Retrieve the subject ID from a hidden field or other source
-                int subjectId = int.Parse(Request.QueryString["id"]);
-
-                // Redirect to the respective subject page with the subject ID in the query string
-
-                Response.Redirect($"~/Subjects/Subject.aspx?id={subjectId}");  
-           
+                int subjectId;
+                if (int.TryParse(Request.QueryString["id"], out subjectId))
+                {
+                    // Redirect to the subject quiz page with the subject ID in the query string
+                    Response.Redirect($"~/Subjects/Subject.aspx?id={subjectId}");
+                }
+                else
+                {
+                    Response.Write("<p>Error: Invalid subject ID.</p>");
+                }
             }
             else
             {
                 Response.Write("<p>You must agree to the terms and conditions to register.</p>");
             }
         }
-
     }
 }

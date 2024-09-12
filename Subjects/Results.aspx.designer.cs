@@ -11,7 +11,7 @@ namespace Quizify.Subjects
 {
 
 
-    public partial class Subject
+    public partial class Results
     {
 
         /// <summary>
@@ -24,66 +24,48 @@ namespace Quizify.Subjects
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
-        /// HiddenFieldRemainingTime control.
+        /// CorrectAnswersLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField HiddenFieldRemainingTime;
+        protected global::System.Web.UI.WebControls.Label CorrectAnswersLabel;
 
         /// <summary>
-        /// QuestionLabel control.
+        /// IncorrectAnswersLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label QuestionLabel;
+        protected global::System.Web.UI.WebControls.Label IncorrectAnswersLabel;
 
         /// <summary>
-        /// OptionsPanel control.
+        /// SkippedAnswersLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel OptionsPanel;
+        protected global::System.Web.UI.WebControls.Label SkippedAnswersLabel;
 
         /// <summary>
-        /// HiddenFieldAnswers control.
+        /// TotalQuestionsLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField HiddenFieldAnswers;
+        protected global::System.Web.UI.WebControls.Label TotalQuestionsLabel;
 
         /// <summary>
-        /// PrevButton control.
+        /// ScorePercentageLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button PrevButton;
-
-        /// <summary>
-        /// NextButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button NextButton;
-
-        /// <summary>
-        /// FinishButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button FinishButton;
+        protected global::System.Web.UI.WebControls.Label ScorePercentageLabel;
     }
 }
