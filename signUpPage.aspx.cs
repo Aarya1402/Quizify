@@ -118,14 +118,24 @@ namespace Quizify
                     lbalert.Text = "Email is not redundant. Proceeding with data insertion.";
                     int rows = InsertData(_username, _password, _email, _role);
                     lbalert.Text = "Sign up successful.";
+                    cmd.CommandText = "SELECT role FROM [User] WHERE Email = @Email AND Password = @Password";
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@Email", _email);
+                    cmd.Parameters.AddWithValue("@Password", _password);
+                    bool isAdmin = (bool)cmd.ExecuteScalar();
 
-                    if(_role == 0)
+                    Session["email"] = _email;
+                    Session["role"] = isAdmin ? "Admin" : "User";
+                    Session["IsLoggedIn"] = true;
+                    if (_role == 0)
                     {
+                      
                         Response.Redirect("~/Home.aspx");
                     }
                     else
                     {
-                        Response.Write("~/MySubjects.aspc");
+                        
+                        Response.Write("~/MySubjects.aspx");
                     }
 
                     

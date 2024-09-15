@@ -109,6 +109,7 @@
     </Content>
     <Content Include="Global.asax" />
     <Content Include="JustInsertion.aspx" />
+    <Content Include="Subjects\EditQuestion.aspx" />
     <Content Include="Subjects\MySubjects.aspx" />
     <Content Include="Subjects\Results.aspx" />
     <Content Include="Subjects\Home.aspx" />
@@ -137,6 +138,13 @@
     </Compile>
     <Compile Include="loginPage.aspx.designer.cs">
       <DependentUpon>loginPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Subjects\EditQuestion.aspx.cs">
+      <DependentUpon>EditQuestion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Subjects\EditQuestion.aspx.designer.cs">
+      <DependentUpon>EditQuestion.aspx</DependentUpon>
     </Compile>
     <Compile Include="Subjects\MySubjects.aspx.cs">
       <DependentUpon>MySubjects.aspx</DependentUpon>
