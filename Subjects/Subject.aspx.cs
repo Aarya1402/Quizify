@@ -21,7 +21,11 @@ namespace Quizify.Subjects
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            Session["QuizStartTime"] = DateTime.Now;
+            if (Session["IsLoggedIn"] == null)
+            {
+                Response.Redirect("~/loginPage.aspx");
+                return;
+            }
             if (!IsPostBack)
             {
                 if (int.TryParse(Request.QueryString["id"], out int subjectId))
@@ -54,7 +58,7 @@ namespace Quizify.Subjects
             DateTime startTime = (DateTime)Session["QuizStartTime"];
             TimeSpan elapsedTime = DateTime.Now - startTime;
             int remainingSeconds = (1 * 60) - (int)elapsedTime.TotalSeconds; 
-
+            //Response.Write(remainingSeconds.ToString());
             if (remainingSeconds <= 0)
             {
                 CalculateScore(userAnswers);

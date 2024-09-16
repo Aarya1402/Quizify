@@ -44,6 +44,25 @@ namespace Quizify
 
                 if (count > 0)
                 {
+                    cmd.CommandText = "SELECT role FROM [User] WHERE Email = @Email AND Password = @Password";
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@Email", _email);
+                    cmd.Parameters.AddWithValue("@Password", _password);
+                    bool isAdmin = (bool)cmd.ExecuteScalar();
+                    Session["role"] = isAdmin ? "Admin" : "User";
+
+                    cmd.CommandText = "SELECT Id FROM [User] WHERE Email = @Email AND Password = @Password";
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@Email", _email);
+                    cmd.Parameters.AddWithValue("@Password", _password);
+                    int id = (int)cmd.ExecuteScalar();
+                    Session["UserId"] = id;
+                    Session["email"] = _email;
+                    Session["IsLoggedIn"] = true;
+                    if(isAdmin)
+                    {
+                        Response.Write("~/Subjects/MySubjects.aspx");
+                    }
                     Response.Redirect("~/Subjects/Home.aspx");
                 }
                 else
