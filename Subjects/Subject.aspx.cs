@@ -21,6 +21,7 @@ namespace Quizify.Subjects
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            Session["QuizStartTime"] = DateTime.Now;
             if (!IsPostBack)
             {
                 if (int.TryParse(Request.QueryString["id"], out int subjectId))
@@ -57,7 +58,7 @@ namespace Quizify.Subjects
             if (remainingSeconds <= 0)
             {
                 CalculateScore(userAnswers);
-                Response.Redirect("~/Results.aspx");
+                Response.Redirect("~/Subjects/Results.aspx");
             }
             HiddenFieldRemainingTime.Value = remainingSeconds.ToString();
         }
@@ -191,7 +192,7 @@ namespace Quizify.Subjects
             Session["IncorrectAnswers"] = incorrectAnswers;
             Session["SkippedAnswers"] = skippedAnswers;
 
-            Response.Redirect("~/Results.aspx");
+            Response.Redirect("~/Subjects/Results.aspx");
         }
 
 

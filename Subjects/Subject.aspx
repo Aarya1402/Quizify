@@ -109,7 +109,7 @@
 
                     if (--timer < 0) {
                         clearInterval(timerInterval);
-                        window.location.href = 'Results.aspx';
+                        window.location.href = '/Subjects/Results.aspx';
                     }
                 }, 1000);
             }
