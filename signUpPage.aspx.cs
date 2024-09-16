@@ -115,6 +115,7 @@ namespace Quizify
                 lbalert.Text = "Checking for email redundancy.";
                 if (CheckRedundancy(_email))
                 {
+                    con.Open();
                     lbalert.Text = "Email is not redundant. Proceeding with data insertion.";
                     int rows = InsertData(_username, _password, _email, _role);
                     lbalert.Text = "Sign up successful.";
@@ -122,11 +123,14 @@ namespace Quizify
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("@Email", _email);
                     cmd.Parameters.AddWithValue("@Password", _password);
-                    bool isAdmin = (bool)cmd.ExecuteScalar();
+                    using (con)
+                    {
+                        bool isAdmin = (bool)cmd.ExecuteScalar();
 
-                    Session["email"] = _email;
-                    Session["role"] = isAdmin ? "Admin" : "User";
-                    Session["IsLoggedIn"] = true;
+                        Session["email"] = _email;
+                        Session["role"] = isAdmin ? "Admin" : "User";
+                        Session["IsLoggedIn"] = true;
+                    }
                     if (_role == 0)
                     {
                       
