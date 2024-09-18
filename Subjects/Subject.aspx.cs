@@ -110,6 +110,7 @@ namespace Quizify.Subjects
                 return;
             }
 
+            quesid.Text = (index + 1).ToString();
             QuestionLabel.Text = currentQuestionRow["Question"].ToString();
             OptionsPanel.Controls.Clear();
 

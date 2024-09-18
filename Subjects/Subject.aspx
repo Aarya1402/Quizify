@@ -45,6 +45,7 @@
         <div class="timer">
             Time Remaining: <span id="timerDisplay"></span>
         </div>
+            <b><asp:Label ID="quesid" runat="server" BorderStyle="Ridge"></asp:Label></b>&nbsp;&nbsp;
             <asp:Label ID="QuestionLabel" runat="server" Text="Question will appear here"></asp:Label>
             <br />
             <asp:Panel ID="OptionsPanel" runat="server"></asp:Panel>
@@ -56,6 +57,8 @@
                 <asp:Button ID="FinishButton" runat="server" Text="Finish" OnClick="FinishButton_Click" />
             </div>
         </div>
+
+
 
         <script type="text/javascript">
             function selectOption(optionDiv) {
