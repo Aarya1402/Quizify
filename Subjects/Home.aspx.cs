@@ -35,5 +35,16 @@ namespace Quizify.Subjects
                 }
             }
         }
+
+        protected void btnlogout_Click(object sender, EventArgs e)
+        {
+            
+            Session.Clear();
+            Session.Abandon();
+
+            
+            Response.Redirect("~/loginPage.aspx");
+
+        }
     }
 }

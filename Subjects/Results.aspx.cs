@@ -74,5 +74,29 @@ namespace Quizify.Subjects
                 con.Close();
             }
         }
+
+        protected void btnAnotherQuiz_Click(object sender, EventArgs e)
+        {
+            if (Session["IsLoggedIn"] == null)
+            {
+                Response.Redirect("~/loginPage.aspx");
+                return;
+            }
+            else
+            {
+                Response.Redirect("~/Subjects/Home.aspx");
+            }
+        }
+
+        protected void btnLogout_Click(object sender, EventArgs e)
+        {
+
+            Session.Clear();
+            Session.Abandon();
+
+
+            Response.Redirect("~/loginPage.aspx");
+
+        }
     }
 }

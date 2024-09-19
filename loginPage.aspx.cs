@@ -59,9 +59,11 @@ namespace Quizify
                     Session["UserId"] = id;
                     Session["email"] = _email;
                     Session["IsLoggedIn"] = true;
-                    if(isAdmin)
+                    Response.Write(Session);
+
+                    if (Session["role" ] == "Admin")
                     {
-                        Response.Write("~/Subjects/MySubjects.aspx");
+                        Response.Redirect("~/Subjects/MySubjects.aspx");
                     }
                     Response.Redirect("~/Subjects/Home.aspx");
                 }

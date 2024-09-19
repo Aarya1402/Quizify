@@ -324,5 +324,19 @@ namespace Quizify.Subjects
             }
         }
 
+        protected void btnChangeSubject_Click(object sender, EventArgs e)
+        {
+            if (Session["IsLoggedIn"] == null)
+            {
+                Response.Redirect("~/loginPage.aspx");
+                return;
+            }
+            if (Session["Role"] == "User" || Session["Role"] == null)
+            {
+                Response.Write("<p>Please login as admin.</p>");
+                return;
+            }
+            Response.Redirect("~/Subjects/MySubjects.aspx");
+        }
     }
 }

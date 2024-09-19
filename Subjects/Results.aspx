@@ -35,7 +35,15 @@
             <asp:Label ID="IncorrectAnswersLabel" runat="server" CssClass="results-label" Text=""></asp:Label><br />
             <asp:Label ID="SkippedAnswersLabel" runat="server" CssClass="results-label" Text=""></asp:Label><br />
             <asp:Label ID="TotalQuestionsLabel" runat="server" CssClass="results-label" Text=""></asp:Label><br />
-            <asp:Label ID="ScorePercentageLabel" runat="server" CssClass="results-label" Text=""></asp:Label><br />
+            <asp:Label ID="ScorePercentageLabel" runat="server" CssClass="results-label" Text=""></asp:Label>
+            <br />
+            <br />
+            <asp:Button ID="btnAnotherQuiz" runat="server" OnClick="btnAnotherQuiz_Click" Text="Give another quiz" />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <asp:Button ID="btnLogout" runat="server" OnClick="btnLogout_Click" Text="Logout" />
+            <br />
+            <br />
+            <br />
         </div>
     </form>
 </body>

@@ -45,6 +45,11 @@
         <asp:ValidationSummary ID="vsMySubject" runat="server" ValidationGroup="AddSubjectGroup" />
         <asp:RequiredFieldValidator ID="rfvName" runat="server" ControlToValidate="tbSubName" Display="None" ErrorMessage="Name is required" ValidationGroup="AddSubjectGroup"></asp:RequiredFieldValidator>
         <asp:RequiredFieldValidator ID="rfvSubDesc" runat="server" ControlToValidate="tbSubDesc" Display="None" ErrorMessage="Description is required" ValidationGroup="AddSubjectGroup"></asp:RequiredFieldValidator>
+        <br />
+        <br />
+        <asp:Button ID="btnViewQuiz" runat="server" OnClick="btnViewQuiz_Click" Text="View Quiz" />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <asp:Button ID="btnLogout" runat="server" OnClick="btnLogout_Click" Text="Logout" />
     </form>
 </body>
 </html>

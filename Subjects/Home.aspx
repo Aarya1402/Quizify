@@ -24,9 +24,15 @@
                 </Columns>
             </asp:GridView>
         </div>
-    </form>
 
     <!-- Footer placeholder -->
     <!-- Add your footer here -->
-</body>
+        <p>
+            &nbsp;</p>
+        <p>
+            &nbsp;</p>
+        <asp:Button ID="btnlogout" runat="server" OnClick="btnlogout_Click" Text="Logout" />
+    </form>
+
+    </body>
 </html>

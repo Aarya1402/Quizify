@@ -66,6 +66,10 @@ DataKeyNames="Id">
         <asp:ValidationSummary ID="vsEditQuestion" runat="server" ValidationGroup="AddQuestionGroup" />
         <asp:RequiredFieldValidator ID="rfvQuestion" runat="server" ControlToValidate="tbQuestion" Display="None" ErrorMessage="Question is required" ValidationGroup="AddQuestionGroup"></asp:RequiredFieldValidator>
         <asp:RequiredFieldValidator ID="rfvCorrectAns" runat="server" ControlToValidate="tbCorrectAns" Display="None" ErrorMessage="Correct answer is required" ValidationGroup="AddQuestionGroup"></asp:RequiredFieldValidator>
+        <br />
+        <br />
+        <asp:Button ID="btnChangeSubject" runat="server" OnClick="btnChangeSubject_Click" Text="Change subject" />
+        <br />
     </form>
 </body>
 </html>

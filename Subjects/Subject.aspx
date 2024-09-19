@@ -53,7 +53,9 @@
             <asp:HiddenField ID="HiddenFieldAnswers" runat="server" />
             <div class="buttons-container">
                 <asp:Button ID="PrevButton" runat="server" Text="Prev" OnClick="PrevButton_Click" />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <asp:Button ID="NextButton" runat="server" Text="Next" OnClick="NextButton_Click" />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <asp:Button ID="FinishButton" runat="server" Text="Finish" OnClick="FinishButton_Click" />
             </div>
         </div>
